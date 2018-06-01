@@ -152,7 +152,7 @@ app.expressInit = function() {
 
   /**** robots.txt handler ****/
   // https://stackoverflow.com/questions/15119760/what-is-the-smartest-way-to-handle-robots-txt-in-express
-  app.use(function (req, res, next) {
+  exp.use(function (req, res, next) {
     if ('/robots.txt' == req.url) {
       res.type('text/plain')
       res.send("User-agent: *\nDisallow: /");
