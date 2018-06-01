@@ -8,20 +8,20 @@
 
 /**** Module dependencies ****/
 var express = require('express'),
-  path = require('path'),
-  util = require('util'),
-  url = require('url'),
-  events = require('events'),
-  favicon = require('serve-favicon'),
-  bodyParser = require('body-parser'),
-  exphbs = require('express-handlebars');
+    path = require('path'),
+    util = require('util'),
+    url = require('url'),
+    events = require('events'),
+    favicon = require('serve-favicon'),
+    bodyParser = require('body-parser'),
+    exphbs = require('express-handlebars');
 
 /**** helpers ****/
 var handlebars = require('./helpers/handlebars');
 
 /**** routes ****/
 var index = require('./routes'),
-  stream = require('./routes/stream');
+    stream = require('./routes/stream');
 
 var app = {};
 
@@ -148,6 +148,17 @@ app.expressInit = function() {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
+  });
+
+  /**** robots.txt handler ****/
+  // https://stackoverflow.com/questions/15119760/what-is-the-smartest-way-to-handle-robots-txt-in-express
+  app.use(function (req, res, next) {
+    if ('/robots.txt' == req.url) {
+      res.type('text/plain')
+      res.send("User-agent: *\nDisallow: /");
+    } else {
+      next();
+    }
   });
 
   /**** error handler ****/
