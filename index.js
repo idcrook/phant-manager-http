@@ -95,6 +95,17 @@ app.expressInit = function() {
     )
   );
 
+  /**** robots.txt handler ****/
+  // https://stackoverflow.com/questions/15119760/what-is-the-smartest-way-to-handle-robots-txt-in-express
+  exp.use(function (req, res, next) {
+    if ('/robots.txt' == req.url) {
+      res.type('text/plain')
+      res.send("User-agent: *\nDisallow: /");
+    } else {
+      next();
+    }
+  });
+
   exp.use(express.compress());
   exp.use(bodyParser.json());
   exp.use(bodyParser.urlencoded({
@@ -148,17 +159,6 @@ app.expressInit = function() {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
-  });
-
-  /**** robots.txt handler ****/
-  // https://stackoverflow.com/questions/15119760/what-is-the-smartest-way-to-handle-robots-txt-in-express
-  exp.use(function (req, res, next) {
-    if ('/robots.txt' == req.url) {
-      res.type('text/plain')
-      res.send("User-agent: *\nDisallow: /");
-    } else {
-      next();
-    }
   });
 
   /**** error handler ****/
