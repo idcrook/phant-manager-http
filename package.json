@@ -48,8 +48,8 @@
     "grunt-shell": "^0.6.4",
     "jshint-stylish": "^0.1.5",
     "load-grunt-tasks": "^0.4.0",
-    "phant": "^6.7.1",
-    "phant-keychain-hex": "^0.2.1",
+    "phant": "https://github.com/idcrook/phant#master",
+    "phant-keychain-hex": "https://github.com/idcrook/phant-keychain-hex#main",
     "phant-meta-test": "^2.1.3",
     "request": "^2.36.0",
     "time-grunt": "^0.2.10"

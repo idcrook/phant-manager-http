@@ -213,7 +213,7 @@ exports.view = function(req, res, next) {
           success: true,
           publicKey: req.param('publicKey'),
           stream: (function() {
-            var s = util._extend({}, stream);
+            var s = Object.assign({}, stream);
             delete s.flagged;
             delete s.id;
             delete s._id;
@@ -256,7 +256,7 @@ exports.alias = function(req, res, next) {
           success: true,
           publicKey: pub,
           stream: (function() {
-            var s = util._extend({}, stream);
+            var s = Object.assign({}, stream);
             delete s.flagged;
             delete s.id;
             delete s._id;
@@ -345,7 +345,7 @@ exports.create = function(req, res, next) {
           res.json({
             success: true,
             stream: (function() {
-              var s = util._extend({}, stream);
+              var s = Object.assign({}, stream);
               delete s.flagged;
               delete s.id;
               delete s._id;
@@ -641,7 +641,7 @@ function list(query, sort, title, req, res, next) {
         stream = stream.toObject();
       }
 
-      var s = util._extend({}, stream);
+      var s = Object.assign({}, stream);
       s.publicKey = self.keychain.publicKey(stream.id);
       return s;
 

@@ -19,6 +19,9 @@ This section outlines how to quickly get this package up and running with the **
 * do: `npm install`
 
 ### Run
+
+`npm test -- --force`
+
 This example assumes you configured the module to use port `8080`. If you have changed the HTTP port, replace `8080` with the port you chose.
 
 * do: `npm start`

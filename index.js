@@ -8,20 +8,20 @@
 
 /**** Module dependencies ****/
 var express = require('express'),
-    path = require('path'),
-    util = require('util'),
-    url = require('url'),
-    events = require('events'),
-    favicon = require('serve-favicon'),
-    bodyParser = require('body-parser'),
-    exphbs = require('express-handlebars');
+  path = require('path'),
+  util = require('util'),
+  url = require('url'),
+  events = require('events'),
+  favicon = require('serve-favicon'),
+  bodyParser = require('body-parser'),
+  exphbs = require('express-handlebars');
 
 /**** helpers ****/
 var handlebars = require('./helpers/handlebars');
 
 /**** routes ****/
 var index = require('./routes'),
-    stream = require('./routes/stream');
+  stream = require('./routes/stream');
 
 var app = {};
 
@@ -58,9 +58,10 @@ function PhantManager(config) {
 
   };
 
-  util._extend(responder, events.EventEmitter.prototype);
-  util._extend(responder, app);
-  util._extend(responder, config);
+  Object.assign(responder, events.EventEmitter.prototype);
+  Object.assign(responder, app);
+  Object.assign(responder, config);
+
 
   responder.express = responder.expressInit();
 
@@ -97,9 +98,9 @@ app.expressInit = function() {
 
   /**** robots.txt handler ****/
   // https://stackoverflow.com/questions/15119760/what-is-the-smartest-way-to-handle-robots-txt-in-express
-  exp.use(function (req, res, next) {
+  exp.use(function(req, res, next) {
     if ('/robots.txt' == req.url) {
-      res.type('text/plain')
+      res.type('text/plain');
       res.send("User-agent: *\nDisallow: /");
     } else {
       next();
