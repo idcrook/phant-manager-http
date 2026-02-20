@@ -9,7 +9,7 @@
 /**** Module dependencies ****/
 var express = require('express'),
   path = require('path'),
-  util = require('util'),
+  compression = require('compression'),
   url = require('url'),
   events = require('events'),
   favicon = require('serve-favicon'),
@@ -99,7 +99,7 @@ app.expressInit = function() {
   /**** robots.txt handler ****/
   // https://stackoverflow.com/questions/15119760/what-is-the-smartest-way-to-handle-robots-txt-in-express
   exp.use(function(req, res, next) {
-    if ('/robots.txt' == req.url) {
+    if ('/robots.txt' === req.url) {
       res.type('text/plain');
       res.send("User-agent: *\nDisallow: /");
     } else {
@@ -107,7 +107,7 @@ app.expressInit = function() {
     }
   });
 
-  exp.use(express.compress());
+  exp.use(compression());
   exp.use(bodyParser.json());
   exp.use(bodyParser.urlencoded({
     extended: true

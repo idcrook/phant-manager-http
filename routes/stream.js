@@ -1,5 +1,3 @@
-var util = require('util');
-
 exports.aliasExists = function(req, res, next) {
 
   var alias = req.param('alias'),
