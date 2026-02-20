@@ -12,7 +12,7 @@ var express = require('express'),
   compression = require('compression'),
   serveStatic = require('serve-static'),
   url = require('url'),
-  // errorHandler = require('errorhandler'),
+  logger = require('morgan'),
   events = require('events'),
   favicon = require('serve-favicon'),
   bodyParser = require('body-parser'),
@@ -139,6 +139,7 @@ app.expressInit = function() {
 
   if (exp.get('env') === 'development') {
 
+    exp.use(logger('dev'));
     exp.use(serveStatic(
       path.join(__dirname, 'public')
     ));
@@ -154,37 +155,6 @@ app.expressInit = function() {
     ));
 
   }
-
-  exp.use(exp.router);
-
-  /**** 404 handler ****/
-  exp.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-  });
-
-  /**** error handler ****/
-  exp.use(function(err, req, res, next) {
-
-    var status = err.status || 200;
-
-    res.format({
-      html: function() {
-        res.status(status).render('error', {
-          message: err.message,
-          error: {}
-        });
-      },
-      json: function() {
-        res.json(status, {
-          success: (status === 200 ? true : false),
-          message: err.message
-        });
-      }
-    });
-
-  });
 
   exp.post('/streams.:ext', stream.create.bind(this));
   exp.post('/streams', stream.create.bind(this));
@@ -225,9 +195,38 @@ app.expressInit = function() {
   exp.get('/:alias.:ext', stream.alias.bind(this));
   exp.get('/:alias', stream.alias.bind(this));
 
-  // if (exp.get('env') === 'development') {
-  //   exp.use(errorHandler());
-  // }
+  // IMPORTANT: These error handlers should only be after the normal routes
+
+  /**** 404 handler ****/
+  exp.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+  });
+
+  /**** error handler ****/
+  exp.use(function(err, req, res, next) {
+
+    var status = err.status || 200;
+
+    res.format({
+      html: function() {
+        res.status(status).render('error', {
+          message: err.message,
+          error: {}
+        });
+      },
+      json: function() {
+        res.json(status, {
+          success: (status === 200 ? true : false),
+          message: err.message
+        });
+      }
+    });
+
+  });
+
+
   return exp;
 
 };
