@@ -189,7 +189,9 @@ exports.country = function(req, res, next) {
 
 exports.view = function(req, res, next) {
 
-  var id = this.keychain.getIdFromPublicKey(req.param('publicKey')),
+  const publicKey = req.params.publicKey || req.body.publicKey || req.query.publicKey;
+
+  var id = this.keychain.getIdFromPublicKey(publicKey),
     error = Err.bind(this, next);
 
   this.metadata.get(id, function(err, stream) {
@@ -201,15 +203,15 @@ exports.view = function(req, res, next) {
     res.format({
       html: function() {
         res.render('streams/view', {
-          title: 'Stream ' + req.param('publicKey'),
-          publicKey: req.param('publicKey'),
+          title: 'Stream ' + publicKey,
+          publicKey: publicKey,
           stream: stream
         });
       },
       json: function() {
         res.json({
           success: true,
-          publicKey: req.param('publicKey'),
+          publicKey: publicKey,
           stream: (function() {
             var s = Object.assign({}, stream);
             delete s.flagged;
@@ -619,8 +621,8 @@ exports.remove = function(req, res, next) {
 function list(query, sort, title, req, res, next) {
 
   var self = this,
-    page = parseInt(req.param('page')) || 1,
-    per_page = parseInt(req.param('per_page')) || 20,
+    page = parseInt(req.params.page || req.body.page || req.query.page) || 1,
+    per_page = parseInt(req.params.per_page || req.body.per_page || req.query.per_page) || 20,
     error = Err.bind(this, next);
 
   this.metadata.list(function(err, streams) {
