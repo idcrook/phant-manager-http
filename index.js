@@ -12,6 +12,7 @@ var express = require('express'),
   compression = require('compression'),
   serveStatic = require('serve-static'),
   url = require('url'),
+  // errorHandler = require('errorhandler'),
   events = require('events'),
   favicon = require('serve-favicon'),
   bodyParser = require('body-parser'),
@@ -196,7 +197,10 @@ app.expressInit = function() {
   exp.delete('/streams/:publicKey', stream.remove.bind(this));
 
   exp.get('/', index.home);
-  exp.get('/streams/make', stream.make);
+
+  // Turn off stream creation form
+  //exp.get('/streams/make', stream.make);
+
   exp.get('/streams/delete', stream.delete);
   exp.get('/streams/clear', stream.clear);
   exp.get('/streams/tag/:tag.:ext', stream.tag.bind(this));
@@ -221,6 +225,9 @@ app.expressInit = function() {
   exp.get('/:alias.:ext', stream.alias.bind(this));
   exp.get('/:alias', stream.alias.bind(this));
 
+  // if (exp.get('env') === 'development') {
+  //   exp.use(errorHandler());
+  // }
   return exp;
 
 };
