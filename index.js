@@ -10,6 +10,7 @@
 var express = require('express'),
   path = require('path'),
   compression = require('compression'),
+  serveStatic = require('serve-static'),
   url = require('url'),
   events = require('events'),
   favicon = require('serve-favicon'),
@@ -137,7 +138,7 @@ app.expressInit = function() {
 
   if (exp.get('env') === 'development') {
 
-    exp.use(express.static(
+    exp.use(serveStatic(
       path.join(__dirname, 'public')
     ));
 
@@ -145,7 +146,7 @@ app.expressInit = function() {
 
     exp.enable('view cache');
 
-    exp.use(express.static(
+    exp.use(serveStatic(
       path.join(__dirname, 'public'), {
         maxAge: 604800000
       }
