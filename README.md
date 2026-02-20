@@ -32,3 +32,10 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## License
 Copyright (c) 2014 SparkFun Electronics. Licensed under the GPL v3 license.
+
+
+#### Finding `bootstrap-tagsinput.less`
+
+ - [ ] https://github.com/mdbootstrap/bootstrap-templates
+ - [ ] https://github.com/fis-components/bootstrap-tagsinput/
+ - [*] https://github.com/bootstrap-tagsinput/bootstrap-tagsinput
